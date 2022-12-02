@@ -7,8 +7,9 @@ import lombok.Setter;
 @Data
 @Getter
 @Setter
-public class UsersResponseDto {
+public class LikesDto {
     private Long id;
-    private String name;
-    private String email;
+    private String commentId;
+    private String postsId;
+
 }
