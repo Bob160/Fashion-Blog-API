@@ -17,8 +17,8 @@ public class Posts {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(length = 50, nullable = false)
-    private String postBody;
+//    @Column(length = 50, nullable = false)
+//    private String postBody;
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
@@ -73,9 +73,8 @@ public class Posts {
 
     }
 
-    public Posts(Long id, String postBody, Designs designs, Date createdAt, Date updatedAt) {
+    public Posts(Long id, Designs designs, Date createdAt, Date updatedAt) {
         this.id = id;
-        this.postBody = postBody;
         this.designs = designs;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
@@ -89,13 +88,13 @@ public class Posts {
         this.id = id;
     }
 
-    public String getPostBody() {
-        return postBody;
-    }
+//    public String getPostBody() {
+//        return postBody;
+//    }
 
-    public void setPostBody(String postBody) {
-        this.postBody = postBody;
-    }
+//    public void setPostBody(String postBody) {
+//        this.postBody = postBody;
+//    }
 
     public Designs getDesigns() {
         return designs;
@@ -125,11 +124,11 @@ public class Posts {
     public String toString() {
         return "Posts{" +
                 "id=" + id +
-                ", postBody='" + postBody + '\'' +
                 ", designs=" + designs +
                 ", createdAt=" + createdAt +
                 ", updatedAt=" + updatedAt +
                 ", users=" + users +
+                ", userComment=" + userComment +
                 '}';
     }
 }
