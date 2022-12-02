@@ -1,11 +1,16 @@
 package com.fashion.fashionblogapi.entities;
 
 import com.fashion.fashionblogapi.enums.Designs;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.Comment;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
+@Entity
+@Table(name = "post_table")
 public class Posts {
 
     @Id
@@ -29,6 +34,12 @@ public class Posts {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")
     private Users users;
+
+    @OneToMany(mappedBy = "posts")
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
+    private List<Comments> userComment;
+
+
 
     public Users getUsers() {
         return users;

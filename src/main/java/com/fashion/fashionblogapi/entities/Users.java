@@ -1,10 +1,7 @@
 package com.fashion.fashionblogapi.entities;
 
 import com.fashion.fashionblogapi.enums.UserRoles;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 import org.hibernate.annotations.Cascade;
 
 
@@ -14,7 +11,9 @@ import java.util.List;
 @Data
 @ToString
 @Entity
-@NoArgsConstructor
+@Getter
+@Setter
+@RequiredArgsConstructor
 @AllArgsConstructor
 @Table(name = "users_table")
 public class Users {
@@ -30,8 +29,9 @@ public class Users {
     @Enumerated(EnumType.STRING)
     private UserRoles userRoles;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "users")
     @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private List<Posts> postList;
+
 
 }

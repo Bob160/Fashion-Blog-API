@@ -1,13 +1,12 @@
 package com.fashion.fashionblogapi.exceptions;
 
-import com.fashion.fashionblogapi.pojo.ApiResponse;
-import org.springframework.data.crossstore.ChangeSetPersister;
-import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 
-@RestControllerAdvice
+
+@ControllerAdvice
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(ResourceNotFoundException.class)
@@ -17,9 +16,11 @@ public class GlobalExceptionHandler {
         apiError.setMessage(ex.getMessage());
         apiError.setDebugMessage(ex.getDebugMessage());
 
+
+
         return new ResponseEntity<>(apiError, HttpStatus.NOT_FOUND);
     }
-
+    @ExceptionHandler(InvalidRequestException.class)
     public ResponseEntity<Object> handleInvalidRequest(InvalidRequestException ex) {
         ApiError apiError = new ApiError();
         apiError.setStatus(HttpStatus.BAD_REQUEST);
@@ -28,10 +29,24 @@ public class GlobalExceptionHandler {
 
         return new ResponseEntity<>(apiError, HttpStatus.BAD_REQUEST);
     }
-//    @ExceptionHandler(NotFoundException.class)
-//    @ResponseStatus(HttpStatus.NOT_FOUND)
-//    @ResponseBody
-//    public ApiResponse<String> userNotFoundException(NotFoundException ex) {
-//        return new ApiResponse<>(ex.getMessage(),404, null);
-//    }
+    @ExceptionHandler(UserNotFoundException.class)
+    public ResponseEntity<Object> handleUserNotFound(UserNotFoundException ex) {
+        ApiError apiError = new ApiError();
+        apiError.setStatus(HttpStatus.UNAUTHORIZED);
+        apiError.setMessage(ex.getMessage());
+        apiError.setDebugMessage(ex.getDebugMessage());
+
+        return new ResponseEntity<>(apiError, HttpStatus.UNAUTHORIZED);
+    }
+
+
+    public ResponseEntity<Object> handleNumberFormatError(NumberFormatException ex) {
+        ApiError apiError = new ApiError();
+        apiError.setStatus(HttpStatus.NOT_ACCEPTABLE);
+        apiError.setMessage(ex.getMessage());
+        apiError.setDebugMessage(ex.getDebugMessage());
+
+        return new ResponseEntity<>(apiError, HttpStatus.NOT_ACCEPTABLE);
+    }
+
 }

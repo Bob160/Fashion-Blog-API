@@ -10,7 +10,7 @@ public class InvalidRequestException extends RuntimeException{
 
     private String debugMessage;
 
-    public InvalidRequestException(String message) {
+    public InvalidRequestException(String message, String debugMessage) {
         super(message);
         this.debugMessage = debugMessage;
     }

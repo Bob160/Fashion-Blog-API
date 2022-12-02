@@ -1,5 +1,6 @@
 package com.fashion.fashionblogapi.exceptions;
 
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -8,10 +9,6 @@ import lombok.Setter;
 public class ResourceNotFoundException extends RuntimeException{
 
     private String debugMessage;
-
-    public ResourceNotFoundException(String message) {
-        super(message);
-    }
 
     public ResourceNotFoundException(String message, String debugMessage) {
         super(message);

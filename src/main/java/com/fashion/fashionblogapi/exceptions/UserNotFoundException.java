@@ -1,8 +1,14 @@
 package com.fashion.fashionblogapi.exceptions;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class UserNotFoundException extends RuntimeException{
 
 
+    private String DebugMessage;
     //Create No Args Constructor
 //    UserNotFoundException() {
 //        super();
@@ -20,4 +26,8 @@ public class UserNotFoundException extends RuntimeException{
         super(message);
     }
 
+    public UserNotFoundException(String message, String debugMessage) {
+        super(message);
+        DebugMessage = debugMessage;
+    }
 }
