@@ -12,8 +12,10 @@ import java.util.List;
 public interface PostsService {
     List<Posts> posts = new ArrayList<>();
     List<Posts> getAllPosts(Long userId);
-    public Posts getPosts(Long id);
+
     public Posts createPosts(PostsDto postsDto);
+    public Posts getPosts(Long id);
+
     public Posts updatePosts(Long id,PostsDto postsDto);
     public void deletePosts(Long id);
 }

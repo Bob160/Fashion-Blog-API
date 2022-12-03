@@ -13,8 +13,9 @@ public interface CommentsService {
     List<Comments> comments = new ArrayList<>();
     List<Comments> getAllComments(Long postsId);
 
-    public Comments getComment(Long id);
     public Comments createComment(CommentsDto commentsDto);
+    public Comments getComment(Long id);
+
     public Comments updateComment(Long id, CommentsDto commentsDto);
     public  void deleteComment (Long id);
 

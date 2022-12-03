@@ -39,14 +39,32 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(apiError, HttpStatus.UNAUTHORIZED);
     }
 
-
-    public ResponseEntity<Object> handleNumberFormatError(NumberFormatException ex) {
+    @ExceptionHandler(NumberFormatException.class)
+    public ResponseEntity<Object> handleNumberFormat(NumberFormatException ex) {
         ApiError apiError = new ApiError();
         apiError.setStatus(HttpStatus.NOT_ACCEPTABLE);
         apiError.setMessage(ex.getMessage());
         apiError.setDebugMessage(ex.getDebugMessage());
 
         return new ResponseEntity<>(apiError, HttpStatus.NOT_ACCEPTABLE);
+    }
+    @ExceptionHandler(NameCannotBeEmptyException.class)
+    public ResponseEntity<Object> handleNameNotEmpty(NameCannotBeEmptyException ex) {
+        ApiError apiError = new ApiError();
+        apiError.setStatus(HttpStatus.NO_CONTENT);
+        apiError.setMessage(ex.getMessage());
+        apiError.setDebugMessage(ex.getDebugMessage());
+
+        return new ResponseEntity<>(apiError, HttpStatus.NO_CONTENT);
+    }
+
+    public ResponseEntity<Object> handleNameAlreadyExist(UserAlreadyExistException ex) {
+        ApiError apiError = new ApiError();
+        apiError.setStatus(HttpStatus.BAD_REQUEST);
+        apiError.setMessage(ex.getMessage());
+        apiError.setDebugMessage(ex.getDebugMessage());
+
+        return new ResponseEntity<>(apiError, HttpStatus.BAD_REQUEST);
     }
 
 }

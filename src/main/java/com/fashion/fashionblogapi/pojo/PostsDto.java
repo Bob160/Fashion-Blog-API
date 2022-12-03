@@ -11,8 +11,8 @@ import java.util.Date;
 @Getter
 @Setter
 public class PostsDto {
-    private Long id;
-    private String name;
+    //private Long id;
+    private String postTitle;
     private Designs designs;
     private Date createdAt;
     private Date updatedAt;
