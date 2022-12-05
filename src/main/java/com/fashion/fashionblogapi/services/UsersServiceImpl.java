@@ -1,6 +1,7 @@
 package com.fashion.fashionblogapi.services;
 
 import com.fashion.fashionblogapi.entities.Users;
+import com.fashion.fashionblogapi.enums.UserRoles;
 import com.fashion.fashionblogapi.pojo.UsersDto;
 import com.fashion.fashionblogapi.repositories.UsersRepository;
 import org.springframework.beans.BeanUtils;
@@ -19,6 +20,19 @@ public class UsersServiceImpl implements UsersService{
     @Override
     public Users userSignUp(UsersDto usersDto) {
         Users newUsers = new Users();
+        if (UserRoles.ADMIN == null) {
+            newUsers.setName(usersDto.getName());
+            newUsers.setEmail(usersDto.getEmail());
+            newUsers.setPassword(usersDto.getPassword());
+            newUsers.setUserRoles(UserRoles.ADMIN);
+            return usersRepository.save(newUsers);
+        } else {
+            newUsers.setName(usersDto.getName());
+            newUsers.setEmail(usersDto.getEmail());
+            newUsers.setPassword(usersDto.getPassword());
+            newUsers.setUserRoles(usersDto.getUserRoles());
+            return usersRepository.save(newUsers);
+        }
 //        if (newUsers.getName() == null)
 //            throw new NameCannotBeEmptyException("Please enter your name");
 //        else if (newUsers.getEmail() == null)
@@ -29,12 +43,10 @@ public class UsersServiceImpl implements UsersService{
 //        boolean UserExist = usersRepository.findByEmail(newUsers.getEmail());
 //        if(UserExist)
 //            throw new UserAlreadyExistException("User already exists. Login instead");
+//UserRoles userRoles;
 
-        newUsers.setName(usersDto.getName());
-        newUsers.setEmail(usersDto.getEmail());
-        newUsers.setPassword(usersDto.getPassword());
 
-        return usersRepository.save(newUsers);
+
     }
 
     @Override
