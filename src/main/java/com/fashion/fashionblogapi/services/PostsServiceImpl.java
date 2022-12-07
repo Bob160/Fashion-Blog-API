@@ -1,6 +1,7 @@
 package com.fashion.fashionblogapi.services;
 
 import com.fashion.fashionblogapi.entities.Posts;
+import com.fashion.fashionblogapi.entities.Users;
 import com.fashion.fashionblogapi.enums.Designs;
 import com.fashion.fashionblogapi.pojo.PostsDto;
 import com.fashion.fashionblogapi.repositories.PostsRepository;
@@ -26,14 +27,15 @@ public class PostsServiceImpl implements PostsService {
 
     @Override
     public List<Posts> getAllPosts(Long userId) {
-        List<Posts> postsList = postsRepository.findPostsByUsersId(userId);
-        return postsList;
+        Users user = new Users();
+        user.setUserId(userId);
+        return postsRepository.findPostsByUsers(user);
     }
 
     @Override
     public Posts createPosts(PostsDto postsDto) {
         Posts posts = new Posts();
-        posts.setPostTitle(posts.getPostTitle());
+        posts.setPostTitle(postsDto.getPostTitle());
         posts.setDesigns(Designs.BLOUSE);
         postsRepository.save(posts);
         return posts;
@@ -41,14 +43,13 @@ public class PostsServiceImpl implements PostsService {
 
     @Override
     public Posts getPosts(Long id) {
-       Posts posts = postsRepository.findPostsById(id).get();
-        return posts;
+        return postsRepository.findPostsByPostId(id).get();
     }
 
     @Override
     public Posts updatePosts(Long id, PostsDto postsDto) {
-        if (postsRepository.findPostsById(id).isPresent()) {
-            Posts existingPosts = postsRepository.findPostsById(id).get();
+        if (postsRepository.findPostsByPostId(id).isPresent()) {
+            Posts existingPosts = postsRepository.findPostsByPostId(id).get();
             existingPosts.setPostTitle(postsDto.getPostTitle());
             existingPosts.setDesigns(Designs.BLOUSE);
             postsRepository.save(existingPosts);
@@ -59,6 +60,6 @@ public class PostsServiceImpl implements PostsService {
 
     @Override
     public void deletePosts(Long id) {
-        postsRepository.deletePostsById(id);
+        postsRepository.deletePostsByPostId(id);
     }
 }

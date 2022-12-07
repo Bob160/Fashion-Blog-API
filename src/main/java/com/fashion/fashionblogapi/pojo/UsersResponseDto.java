@@ -1,13 +1,11 @@
 package com.fashion.fashionblogapi.pojo;
 
 import com.fashion.fashionblogapi.enums.UserRoles;
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 @Data
-@Getter
-@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class UsersResponseDto {
     private Long id;
     private String name;

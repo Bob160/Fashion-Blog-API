@@ -5,5 +5,5 @@ import com.fashion.fashionblogapi.pojo.UsersDto;
 
 public interface UsersService {
     Users userSignUp(UsersDto usersDto);
-    Users userLogin(String email, String password);
+    UsersDto userLogin(String email, String password);
 }

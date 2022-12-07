@@ -1,8 +1,12 @@
 package com.fashion.fashionblogapi.entities;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -12,28 +16,30 @@ import java.util.List;
 @Table(name = "comment_table")
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class Comments {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long commentId;
 
-    @Column(length = 50, nullable = false)
-    private String comment;
+    @Column(length = 50, nullable = true)
+    private String comments;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(nullable = false)
+//    @Temporal(TemporalType.TIMESTAMP)
+    @CreationTimestamp
     private Date createdAt;
 
-    @Temporal(TemporalType.TIMESTAMP)
+    @UpdateTimestamp
     private Date updatedAt;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "post_id")
+    @JoinColumn(name = "postId")
     private Posts posts;
 
-    @OneToMany(mappedBy = "comments")
-    @Cascade(org.hibernate.annotations.CascadeType.ALL)
-    private List<Likes> likes;
+//    @OneToMany// (mappedBy = "comment")
+//    @Cascade(org.hibernate.annotations.CascadeType.ALL)
+//    private List<CommentsLikes> commentsLikes;
 
 }

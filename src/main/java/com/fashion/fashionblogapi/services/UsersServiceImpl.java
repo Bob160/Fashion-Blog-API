@@ -50,12 +50,15 @@ public class UsersServiceImpl implements UsersService{
     }
 
     @Override
-    public Users userLogin(String email, String password) {
+    public UsersDto userLogin(String email, String password) {
         Users users = usersRepository.findByEmailAndPassword(email, password);
         if (users != null) {
             UsersDto usersDto = new UsersDto();
-            BeanUtils.copyProperties(users, usersDto);
-            return users;
+//            usersDto.setEmail(users.getEmail());
+//            usersDto.setName(users.getName());
+           BeanUtils.copyProperties(users, usersDto);
+            System.out.println(usersDto);
+            return usersDto;
         }
         throw new RuntimeException("User does not exist!");
     }

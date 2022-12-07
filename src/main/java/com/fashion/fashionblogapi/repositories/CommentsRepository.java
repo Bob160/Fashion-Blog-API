@@ -1,6 +1,8 @@
 package com.fashion.fashionblogapi.repositories;
 
 import com.fashion.fashionblogapi.entities.Comments;
+import com.fashion.fashionblogapi.entities.Posts;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -9,7 +11,7 @@ import java.util.Optional;
 
 @Repository
 public interface CommentsRepository extends JpaRepository<Comments, Long> {
-    List<Comments> findCommentsByPostsId(Long postsId);
-    Optional<Comments> findCommentsById(Long id);
-    void deleteCommentsById(Long id);
+    List<Comments> findCommentsByPosts(Posts posts);
+    Optional<Comments> findCommentsByCommentId(Long id);
+    void deleteCommentsByCommentId(Long id);
 }

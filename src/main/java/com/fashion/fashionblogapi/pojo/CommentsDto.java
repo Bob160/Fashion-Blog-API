@@ -1,18 +1,16 @@
 package com.fashion.fashionblogapi.pojo;
 
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.Date;
 
 @Data
-@Getter
-@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class CommentsDto {
-    private Long id;
+    private Long commentId;
     private String comments;
     private Date createdAt;
-    private Date updatedAt;
-    private String postId;
+    //private Date updatedAt;
+    private Long postId;
 }

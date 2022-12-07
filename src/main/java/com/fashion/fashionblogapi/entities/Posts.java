@@ -1,8 +1,12 @@
 package com.fashion.fashionblogapi.entities;
 
 import com.fashion.fashionblogapi.enums.Designs;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.Comment;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -10,122 +14,44 @@ import java.util.List;
 import java.util.UUID;
 
 @Entity
-@Table(name = "post_table")
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Table(name = "posts_table")
+
 public class Posts {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long postId;
 
-    @Column(length = 50, nullable = false)
+    @Column(length = 50, nullable = true)
     private String postTitle;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     @Enumerated(EnumType.STRING)
     private Designs designs;
 
 
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(nullable = false)
+    @CreationTimestamp
     private Date createdAt;
 
-    @Temporal(TemporalType.TIMESTAMP)
+    @UpdateTimestamp
     private Date updatedAt;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "userId")
     private Users users;
 
-    @OneToMany(mappedBy = "posts")
-    @Cascade(org.hibernate.annotations.CascadeType.ALL)
+    @OneToMany(mappedBy = "posts", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Comments> userComment;
 
 
 
-    public Users getUsers() {
-        return users;
-    }
-
-    public void setUsers(Users users) {
-        this.users = users;
-    }
-
-    @PrePersist
-    protected void setCreatedAt() {
-        if (this.createdAt == null)
-            createdAt = new Date();
-        if (this.updatedAt == null)
-            updatedAt = new Date();
-        if (this.id == null);
-        try {
-            id = Long.parseLong(UUID.randomUUID().toString());
-        } catch (NumberFormatException nfe) {
-            nfe.printStackTrace();
-        }
-
-    }
-
-    @PreUpdate
-    protected void setUpdatedAt() {
-        this.updatedAt = new Date();
-    }
-
-    public Posts() {
-
-    }
-
-    public Posts(Long id, String postTitle, Designs designs, Date createdAt, Date updatedAt) {
-        this.id = id;
-        this.postTitle = postTitle;
-        this.designs = designs;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getPostTitle() {
-        return postTitle;
-    }
-
-    public void setPostTitle(String postTitle) {
-        this.postTitle = postTitle;
-    }
-
-    public Designs getDesigns() {
-        return designs;
-    }
-
-    public void setDesigns(Designs designs) {
-        this.designs = designs;
-    }
-
-    public Date getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(Date createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public Date getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(Date updatedAt) {
-        this.updatedAt = updatedAt;
-    }
-
     @Override
     public String toString() {
         return "Posts{" +
-                "id=" + id +
+                "id=" + postId +
                 ", postTitle='" + postTitle + '\'' +
                 ", designs=" + designs +
                 ", createdAt=" + createdAt +
