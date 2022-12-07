@@ -11,13 +11,13 @@ import org.hibernate.annotations.UpdateTimestamp;
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "posts_table")
 
 public class Posts {
 
@@ -25,12 +25,11 @@ public class Posts {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long postId;
 
-    @Column(length = 50, nullable = true)
+    @Column(length = 50, nullable = false)
     private String postTitle;
 
-    @Column(nullable = true)
-    @Enumerated(EnumType.STRING)
-    private Designs designs;
+    @Column(nullable = false)
+    private String designs;
 
 
     @CreationTimestamp
@@ -39,25 +38,11 @@ public class Posts {
     @UpdateTimestamp
     private Date updatedAt;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "userId")
-    private Users users;
+//    @ManyToOne(cascade = CascadeType.ALL)
+//    @JoinColumn(name = "userId", nullable = false)
+//    private Users users;
 
     @OneToMany(mappedBy = "posts", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Comments> userComment;
+    private Set<Comments> userComment;
 
-
-
-    @Override
-    public String toString() {
-        return "Posts{" +
-                "id=" + postId +
-                ", postTitle='" + postTitle + '\'' +
-                ", designs=" + designs +
-                ", createdAt=" + createdAt +
-                ", updatedAt=" + updatedAt +
-                ", users=" + users +
-                ", userComment=" + userComment +
-                '}';
-    }
 }

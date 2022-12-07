@@ -11,7 +11,5 @@ import java.util.Optional;
 
 @Repository
 public interface CommentsRepository extends JpaRepository<Comments, Long> {
-    List<Comments> findCommentsByPosts(Posts posts);
-    Optional<Comments> findCommentsByCommentId(Long id);
-    void deleteCommentsByCommentId(Long id);
+    List<Comments> findAllByPosts(Posts posts);
 }

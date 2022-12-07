@@ -5,28 +5,23 @@ import com.fashion.fashionblogapi.entities.Posts;
 import com.fashion.fashionblogapi.pojo.CommentsDto;
 import com.fashion.fashionblogapi.repositories.CommentsRepository;
 import com.fashion.fashionblogapi.repositories.PostsRepository;
+import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class CommentsServiceImpl implements CommentsService{
+@AllArgsConstructor
+public class CommentsServiceImpl implements CommentsService {
 
     private final CommentsRepository commentsRepository;
-    private final PostsRepository postsRepository;
-
-    Comments comments = new Comments();
-    public CommentsServiceImpl(CommentsRepository commentsRepository, PostsRepository postsRepository) {
-        this.commentsRepository = commentsRepository;
-        this.postsRepository = postsRepository;
-    }
 
     @Override
     public List<Comments> getAllComments(Long postsId) {
         Posts posts = new Posts();
         posts.setPostId(postsId);
-        List<Comments> comments = commentsRepository.findCommentsByPosts(posts);
-        return comments;
+        return commentsRepository.findAllByPosts(posts);
     }
 
     //id;
@@ -45,14 +40,13 @@ public class CommentsServiceImpl implements CommentsService{
 
     @Override
     public Comments getComment(Long id) {
-        Comments comments = commentsRepository.findCommentsByCommentId(id).get();
-        return comments;
+        return commentsRepository.findById(id).orElse(null);
     }
 
     @Override
     public Comments updateComment(Long id, CommentsDto commentsDto) {
-        if (commentsRepository.findCommentsByCommentId(id).isPresent()) {
-            Comments existingComments = commentsRepository.findCommentsByCommentId(id).get();
+        Comments existingComments = commentsRepository.findById(id).orElse(null);
+        if (existingComments != null) {
             existingComments.setComments(commentsDto.getComments());
             commentsRepository.save(existingComments);
             return existingComments;
@@ -62,6 +56,6 @@ public class CommentsServiceImpl implements CommentsService{
 
     @Override
     public void deleteComment(Long id) {
-        commentsRepository.deleteCommentsByCommentId(id);
+        commentsRepository.deleteById(id);
     }
 }

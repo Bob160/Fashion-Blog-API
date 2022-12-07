@@ -3,6 +3,7 @@ package com.fashion.fashionblogapi.controllers;
 import com.fashion.fashionblogapi.entities.Comments;
 import com.fashion.fashionblogapi.pojo.CommentsDto;
 import com.fashion.fashionblogapi.services.CommentsService;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,14 +11,10 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/users")
+@AllArgsConstructor
 public class CommentsController {
 
     private final CommentsService commentsService;
-
-    @Autowired
-    public CommentsController(CommentsService commentsService) {
-        this.commentsService = commentsService;
-    }
 
     @GetMapping("/comment/{commentsId}")
     public ResponseEntity<Comments> getComments(@PathVariable Long commentsId) {
@@ -25,7 +22,7 @@ public class CommentsController {
         return new ResponseEntity<>(comments, HttpStatus.OK);
     }
 
-    @PostMapping("/comment")
+    @PostMapping("/comment/create")
     public ResponseEntity<Comments> createComments(@RequestBody CommentsDto commentsDto) {
         Comments comments = commentsService.createComment(commentsDto);
         return new ResponseEntity<>(comments, HttpStatus.CREATED);

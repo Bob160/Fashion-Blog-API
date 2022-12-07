@@ -1,9 +1,6 @@
 package com.fashion.fashionblogapi.entities;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -13,9 +10,7 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
-@Table(name = "comment_table")
-@Getter
-@Setter
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class Comments {
@@ -34,7 +29,7 @@ public class Comments {
     @UpdateTimestamp
     private Date updatedAt;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "postId")
     private Posts posts;
 

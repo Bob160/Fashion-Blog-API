@@ -10,8 +10,5 @@ import java.util.Optional;
 
 @Repository
 public interface PostsRepository extends JpaRepository<Posts, Long> {
-    List<Posts> findPostsByUsers(Users users);
-    Optional<Posts> findPostsByPostId(Long postsId);
-    void deletePostsByPostId(Long postsId);
 
 }

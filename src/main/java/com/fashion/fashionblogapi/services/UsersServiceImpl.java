@@ -24,7 +24,7 @@ public class UsersServiceImpl implements UsersService{
             newUsers.setName(usersDto.getName());
             newUsers.setEmail(usersDto.getEmail());
             newUsers.setPassword(usersDto.getPassword());
-            newUsers.setUserRoles(UserRoles.ADMIN);
+            newUsers.setUserRoles(UserRoles.ADMIN.name());
             return usersRepository.save(newUsers);
         } else {
             newUsers.setName(usersDto.getName());

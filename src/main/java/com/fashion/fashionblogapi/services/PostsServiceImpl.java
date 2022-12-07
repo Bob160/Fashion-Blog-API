@@ -6,52 +6,43 @@ import com.fashion.fashionblogapi.enums.Designs;
 import com.fashion.fashionblogapi.pojo.PostsDto;
 import com.fashion.fashionblogapi.repositories.PostsRepository;
 import com.fashion.fashionblogapi.repositories.UsersRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@AllArgsConstructor
 public class PostsServiceImpl implements PostsService {
 
     private final PostsRepository postsRepository;
     private final UsersRepository usersRepository;
 
-    Posts posts = new Posts();
-
-    public PostsServiceImpl(PostsRepository postsRepository, UsersRepository usersRepository) {
-        this.postsRepository = postsRepository;
-        this.usersRepository = usersRepository;
-
-
-    }
-
     @Override
-    public List<Posts> getAllPosts(Long userId) {
-        Users user = new Users();
-        user.setUserId(userId);
-        return postsRepository.findPostsByUsers(user);
+    public List<Posts> getAllPosts() {
+        return postsRepository.findAll();
     }
 
     @Override
     public Posts createPosts(PostsDto postsDto) {
         Posts posts = new Posts();
         posts.setPostTitle(postsDto.getPostTitle());
-        posts.setDesigns(Designs.BLOUSE);
+        posts.setDesigns(Designs.BLOUSE.name());
         postsRepository.save(posts);
         return posts;
     }
 
     @Override
     public Posts getPosts(Long id) {
-        return postsRepository.findPostsByPostId(id).get();
+        return postsRepository.findById(id).orElse(null);
     }
 
     @Override
     public Posts updatePosts(Long id, PostsDto postsDto) {
-        if (postsRepository.findPostsByPostId(id).isPresent()) {
-            Posts existingPosts = postsRepository.findPostsByPostId(id).get();
+        Posts existingPosts = postsRepository.findById(id).orElse(null);
+        if (existingPosts != null) {
             existingPosts.setPostTitle(postsDto.getPostTitle());
-            existingPosts.setDesigns(Designs.BLOUSE);
+            existingPosts.setDesigns(Designs.BLOUSE.name());
             postsRepository.save(existingPosts);
             return existingPosts;
         }
@@ -60,6 +51,7 @@ public class PostsServiceImpl implements PostsService {
 
     @Override
     public void deletePosts(Long id) {
-        postsRepository.deletePostsByPostId(id);
+        postsRepository.deleteById(id);
+
     }
 }

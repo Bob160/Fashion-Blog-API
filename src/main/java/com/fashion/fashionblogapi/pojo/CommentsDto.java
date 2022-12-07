@@ -8,9 +8,6 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CommentsDto {
-    private Long commentId;
     private String comments;
-    private Date createdAt;
-    //private Date updatedAt;
     private Long postId;
 }

@@ -11,7 +11,7 @@ import java.util.List;
 @Service
 public interface PostsService {
     List<Posts> posts = new ArrayList<>();
-    List<Posts> getAllPosts(Long userId);
+    List<Posts> getAllPosts();
 
     public Posts createPosts(PostsDto postsDto);
     public Posts getPosts(Long id);
